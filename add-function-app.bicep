@@ -10,6 +10,8 @@ param hostingPlanName string = 'myPlan'
 @description('Name of the storage account')
 param storageAccountName string
 
+param sqlConnectionString string
+
 
 
 param allowedOrigins array = [
@@ -49,7 +51,7 @@ resource hostingPlan 'Microsoft.Web/serverfarms@2022-03-01' = {
 // Function App
 // This version is the hand-built version I have made
 
-/*
+
 resource functionApp 'Microsoft.Web/sites@2024-11-01' = {
   name: functionAppName
   location: location
@@ -88,6 +90,10 @@ resource functionApp 'Microsoft.Web/sites@2024-11-01' = {
           value: 'Server=0.tcp.eu.ngrok.io,18881;Database=linktest;User Id=linktest;Password=sada434RFd2;TrustServerCertificate=True;'
         }
         {
+          name: 'NewSQLConnection'
+          value: sqlConnectionString
+        }
+        {
           name: 'NewWorldDatabase'
           value: 'Server=tcp:daisy11db.database.windows.net,1433;Initial Catalog=myrabbit1;Persist Security Info=False;User ID=daisy11db;Password=my!n3wpa55word321;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
         }
@@ -103,7 +109,7 @@ resource functionApp 'Microsoft.Web/sites@2024-11-01' = {
     }
   }
 }
-*/
+
 
 
 
@@ -121,6 +127,9 @@ resource functionApp 'Microsoft.Web/sites@2024-11-01' = {
   It throws lots of warnings but these read-only values seem to get ignored and the process runs fine
 */
 
+
+
+/*
 resource newworldfunctionsapp 'Microsoft.Web/sites@2022-03-01' = {
   name: 'newworldfunctionsapp'
   kind: 'functionapp'
@@ -376,3 +385,6 @@ resource newworldfunctionsapp 'Microsoft.Web/sites@2022-03-01' = {
   }
 }
 
+
+
+*/

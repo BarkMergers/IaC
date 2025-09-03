@@ -1,0 +1,56 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "resources": [
+
+
+    {
+        "sku": {
+            "name": "GP_S_Gen5",
+            "tier": "GeneralPurpose",
+            "family": "Gen5",
+            "capacity": 2
+        },
+        "kind": "v12.0,user,vcore,serverless,freelimit",
+        "properties": {
+            "collation": "SQL_Latin1_General_CP1_CI_AS",
+            "maxSizeBytes": 34359738368,
+            "status": "Paused",
+            "databaseId": "b0304719-1477-41bd-abe0-01a49fbfcf0c",
+            "creationDate": "2025-07-23T12:23:48.753Z",
+            "currentServiceObjectiveName": "GP_S_Gen5_2",
+            "requestedServiceObjectiveName": "GP_S_Gen5_2",
+            "defaultSecondaryLocation": "ukwest",
+            "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+            "zoneRedundant": false,
+            "maxLogSizeBytes": 193273528320,
+            "earliestRestoreDate": "2025-08-27T14:18:18.9554856Z",
+            "readScale": "Disabled",
+            "currentSku": {
+                "name": "GP_S_Gen5",
+                "tier": "GeneralPurpose",
+                "family": "Gen5",
+                "capacity": 2
+            },
+            "autoPauseDelay": 60,
+            "currentBackupStorageRedundancy": "Local",
+            "requestedBackupStorageRedundancy": "Local",
+            "minCapacity": 0.5,
+            "pausedDate": "2025-08-29T10:24:47.357Z",
+            "maintenanceConfigurationId": "/subscriptions/b9144b57-a2c0-4fe8-80ab-10fe51d32287/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
+            "isLedgerOn": false,
+            "isInfraEncryptionEnabled": false,
+            "useFreeLimit": true,
+            "freeLimitExhaustionBehavior": "AutoPause",
+            "availabilityZone": "NoPreference"
+        },
+        "location": "uksouth",
+        "tags": {},
+        "name": "myrabbit1/a",
+        "type": "Microsoft.Sql/servers/databases",
+        "apiVersion": "2022-11-01-preview"
+    }
+
+
+  ]
+}

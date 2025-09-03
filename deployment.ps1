@@ -9,16 +9,39 @@ $functionApp = "newworldfunctionsapp"
 $storageAccount = "mbnewworldstorage"
 
 az group create --name $rg --location $location
-
 #az configure --defaults group=$rg
 
+
+
+
+
+
+
+# Create an SQL server
 az deployment group create `
   --resource-group $rg `
-  --template-file .\functionApp.bicep `
-  --parameters functionAppName=$functionApp storageAccountName=$storageAccount
+  --template-file .\add-sql-server.bicep `
+  --parameters sqlServerName=newworld00112231 adminLogin=sqladmin adminPassword='MyS3cur3P@ssword!'
+
+# Create a new Database
+$sqlConnString = az deployment group create `
+  --resource-group $rg `
+  --template-file .\add-sql-db.bicep `
+  --parameters sqlServerName=newworld00112231 adminLogin=sqladmin sqlDatabaseName='Rabbit3' adminPassword='MyS3cur3P@ssword!' `
+  --query "properties.outputs.sqlConnectionString.value" -o tsv
+
+# Create function app
+az deployment group create `
+  --resource-group $rg `
+  --template-file .\add-function-app.bicep `
+  --parameters functionAppName=$functionApp storageAccountName=$storageAccount sqlConnectionString="$sqlConnString"
+
 
   
+# 
 #az deployment group create `
 #  --resource-group $rg `
 #  --template-file cosmos-mongo.bicep `
-#  --parameters accountName=newworldmongo2
+#  --parameters accountName=mongorabbit4 `
+#  --query properties.outputs
+#

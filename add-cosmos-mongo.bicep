@@ -1,6 +1,57 @@
 @description('Cosmos DB account name, max length 44 characters, lowercase')
 param accountName string = 'sql-${uniqueString(resourceGroup().id)}'
 
+
+resource mongorabbit 'Microsoft.DocumentDB/mongoClusters@2023-03-01-preview' = {
+  name: toLower(accountName)
+  tags: {}
+  location: 'uksouth'
+  properties: {
+    enableFreeTier: false
+    //provisioningState: 'Succeeded'
+    //clusterStatus: 'Ready'
+    administratorLogin: 'mymongorabbit'
+    serverVersion: '8.0'
+    nodeGroupSpecs: [
+      {
+        name: ''
+        kind: 'Shard'
+        sku: 'Free'
+        /*sku: {
+          name: 'Standard_D2s_v3'   // SKU name
+          tier: 'Standard'           // Tier
+          capacity: 1                // Number of vCores
+        }*/
+        //sku: 'Standard_D2s_v3'
+        diskSizeGB: 32
+        enableHa: false
+        nodeCount: 1
+      }
+    ]
+    administratorLoginPassword: 'abc123pFDi4$'
+    //connectionString: 'mongodb+srv://<user>:<password>@mongorabbit.mongocluster.cosmos.azure.com/?tls=true&authMechanism=SCRAM-SHA-256&retrywrites=false&maxIdleTimeMS=120000'
+    earliestRestoreTime: '2025-08-24T11:09:41Z'
+    privateEndpointConnections: []
+    publicNetworkAccess: 'Enabled'
+    replica: {
+      role: 'Primary'
+      replicationState: 'Active'
+    }
+    infrastructureVersion: '2.0'
+  }
+}
+
+
+
+output mongoConnectionString string = mongorabbit.properties.connectionStrings[0].connectionString
+
+
+
+/*
+
+
+
+
 @description('Location for the Cosmos DB account.')
 param location string = resourceGroup().location
 
@@ -167,3 +218,6 @@ resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/container
     }
   }
 }
+
+
+*/

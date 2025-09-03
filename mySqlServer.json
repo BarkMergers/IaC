@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "resources": [
+
+
+
+{
+    "kind": "v12.0",
+    "properties": {
+        "administratorLogin": "daisy11db",
+        "version": "12.0",
+        "state": "Ready",
+        "fullyQualifiedDomainName": "daisy11db.database.windows.net",
+        "privateEndpointConnections": [],
+        "minimalTlsVersion": "1.2",
+        "publicNetworkAccess": "Enabled",
+        "restrictOutboundNetworkAccess": "Disabled"
+    },
+    "location": "uksouth",
+    "tags": {},
+    "name": "daisy11db",
+    "type": "Microsoft.Sql/servers",
+    "apiVersion": "2022-02-01-preview"
+}
+
+  ]
+}
