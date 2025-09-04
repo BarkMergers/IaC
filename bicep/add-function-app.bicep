@@ -110,7 +110,15 @@ resource functionApp 'Microsoft.Web/sites@2024-11-01' = {
   }
 }
 
+// Output the IP address
+output outboundIps string = functionApp.properties.outboundIpAddresses 
 
+
+
+
+
+//split(functionApp.properties.outboundIpAddresses, ',')
+//output possibleOutboundIps array = split(functionApp.properties.possibleOutboundIpAddresses, ',')
 
 
 

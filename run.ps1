@@ -20,23 +20,58 @@ az group create --name $rg --location $location
 # Create an SQL server
 az deployment group create `
   --resource-group $rg `
-  --template-file .\add-sql-server.bicep `
+  --template-file .\bicep\add-sql-server.bicep `
   --parameters sqlServerName=newworld00112231 adminLogin=sqladmin adminPassword='MyS3cur3P@ssword!'
 
 # Create a new Database
 $sqlConnString = az deployment group create `
   --resource-group $rg `
-  --template-file .\add-sql-db.bicep `
+  --template-file .\bicep\add-sql-db.bicep `
   --parameters sqlServerName=newworld00112231 adminLogin=sqladmin sqlDatabaseName='Rabbit3' adminPassword='MyS3cur3P@ssword!' `
   --query "properties.outputs.sqlConnectionString.value" -o tsv
 
+sqlcmd -S newworld00112231.database.windows.net `
+       -d Rabbit3 `
+       -U sqladmin `
+       -P 'MyS3cur3P@ssword!' `
+       -i sql\init-database.sql
+
+
+
+
+
+
+
+
 # Create function app
-az deployment group create `
+$functionIPAddress = az deployment group create `
   --resource-group $rg `
-  --template-file .\add-function-app.bicep `
+  --template-file .\bicep\add-function-app.bicep `
   --parameters functionAppName=$functionApp storageAccountName=$storageAccount sqlConnectionString="$sqlConnString"
 
 
+Write-Output The connection
+Write-Output $functionIPAddress
+
+
+
+
+# Set the firewall rule for the database / function app relationship
+# Is it even possible to set firewall rule based on a different IP address??
+#az deployment group create `
+#  --resource-group $rg `
+#  --template-file .\bicep\init-database-firewall.bicep `
+#  --parameters functionAppName=$functionApp storageAccountName=$storageAccount sqlConnectionString="$sqlConnString"
+
+
+
+
+
+
+
+
+
+  
   
 # 
 #az deployment group create `
